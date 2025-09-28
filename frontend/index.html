@@ -1,0 +1,1116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopEasy - Your Online Store</title>
+    <style>
+        /* Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f5f5;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 15px;
+        }
+        
+        /* Header Styles */
+        header {
+            background-color: #2c3e50;
+            color: white;
+            padding: 1rem 0;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        
+        nav ul li a:hover {
+            color: #3498db;
+        }
+        
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .cart-count {
+            position: absolute;
+            top: -10px;
+            right: -10px;
+            background-color: #e74c3c;
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 0.8rem;
+        }
+        
+        /* Main Content Styles */
+        main {
+            padding: 2rem 0;
+            min-height: calc(100vh - 160px);
+        }
+        
+        .page-title {
+            margin-bottom: 1.5rem;
+            color: #2c3e50;
+            border-bottom: 2px solid #3498db;
+            padding-bottom: 0.5rem;
+        }
+        
+        /* Product Grid */
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .product-card {
+            background: white;
+            border-radius: 5px;
+            overflow: hidden;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .product-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .product-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .product-info {
+            padding: 1rem;
+        }
+        
+        .product-title {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            color: #2c3e50;
+        }
+        
+        .product-price {
+            font-weight: bold;
+            color: #e74c3c;
+            margin-bottom: 1rem;
+        }
+        
+        .btn {
+            display: inline-block;
+            background: #3498db;
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .btn-block {
+            display: block;
+            width: 100%;
+            text-align: center;
+        }
+        
+        .btn-success {
+            background: #27ae60;
+        }
+        
+        .btn-success:hover {
+            background: #219a52;
+        }
+        
+        /* Forms */
+        .form-container {
+            max-width: 500px;
+            margin: 0 auto;
+            background: white;
+            padding: 2rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .form-group {
+            margin-bottom: 1rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 0.75rem;
+            border: 1px solid #ddd;
+            border-radius: 3px;
+            font-size: 1rem;
+        }
+        
+        /* Cart Styles */
+        .cart-items {
+            margin-bottom: 2rem;
+        }
+        
+        .cart-item {
+            display: flex;
+            background: white;
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            margin-right: 1rem;
+        }
+        
+        .cart-item-details {
+            flex: 1;
+        }
+        
+        .cart-item-title {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+        }
+        
+        .cart-item-price {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        .cart-item-quantity {
+            display: flex;
+            align-items: center;
+            margin-top: 0.5rem;
+        }
+        
+        .quantity-btn {
+            background: #f1f1f1;
+            border: none;
+            width: 30px;
+            height: 30px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+        }
+        
+        .quantity-input {
+            width: 50px;
+            text-align: center;
+            margin: 0 0.5rem;
+            border: 1px solid #ddd;
+            padding: 0.25rem;
+        }
+        
+        .cart-summary {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+        
+        .summary-total {
+            font-weight: bold;
+            font-size: 1.2rem;
+            border-top: 1px solid #ddd;
+            padding-top: 1rem;
+        }
+        
+        /* Footer */
+        footer {
+            background: #2c3e50;
+            color: white;
+            text-align: center;
+            padding: 1.5rem 0;
+            margin-top: 2rem;
+        }
+        
+        /* Utility Classes */
+        .hidden {
+            display: none !important;
+        }
+        
+        .text-center {
+            text-align: center;
+        }
+        
+        .mt-1 { margin-top: 1rem; }
+        .mt-2 { margin-top: 2rem; }
+        .mb-1 { margin-bottom: 1rem; }
+        .mb-2 { margin-bottom: 2rem; }
+        
+        /* Tabs/Sections */
+        .section {
+            display: none;
+        }
+        
+        .section.active {
+            display: block;
+        }
+        
+        /* Loading Spinner */
+        .spinner {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3498db;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 2s linear infinite;
+            margin: 20px auto;
+        }
+        
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        
+        /* Error Messages */
+        .error-message {
+            background: #e74c3c;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        /* Success Messages */
+        .success-message {
+            background: #27ae60;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            margin: 10px 0;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin-top: 1rem;
+                justify-content: center;
+            }
+            
+            .products-grid {
+                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            }
+            
+            .cart-item {
+                flex-direction: column;
+            }
+            
+            .cart-item-image {
+                width: 100%;
+                height: 200px;
+                margin-right: 0;
+                margin-bottom: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">ShopEasy</div>
+            <nav>
+                <ul>
+                    <li><a href="#" class="nav-link" data-section="home">Home</a></li>
+                    <li><a href="#" class="nav-link" data-section="products">Products</a></li>
+                    <li id="auth-links">
+                        <a href="#" class="nav-link" data-section="login">Login</a> / 
+                        <a href="#" class="nav-link" data-section="register">Register</a>
+                    </li>
+                    <li class="cart-icon" id="cart-icon">
+                        🛒 <span class="cart-count">0</span>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home" class="section active">
+            <h1 class="page-title">Welcome to ShopEasy</h1>
+            <p>Your one-stop destination for all your shopping needs. Browse our wide selection of products and find great deals!</p>
+            
+            <div class="products-grid mt-2" id="home-products">
+                <!-- Featured products will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Products Section -->
+        <section id="products" class="section">
+            <h1 class="page-title">All Products</h1>
+            <div class="products-grid" id="products-grid">
+                <!-- Products will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Product Details Section -->
+        <section id="product-details" class="section">
+            <h1 class="page-title">Product Details</h1>
+            <div id="product-details-content">
+                <!-- Product details will be loaded here -->
+            </div>
+        </section>
+
+        <!-- Shopping Cart Section -->
+        <section id="cart" class="section">
+            <h1 class="page-title">Your Shopping Cart</h1>
+            <div class="cart-items" id="cart-items">
+                <!-- Cart items will be loaded here -->
+            </div>
+            <div class="cart-summary">
+                <div class="summary-row">
+                    <span>Subtotal:</span>
+                    <span id="cart-subtotal">$0.00</span>
+                </div>
+                <div class="summary-row">
+                    <span>Shipping:</span>
+                    <span id="cart-shipping">$5.00</span>
+                </div>
+                <div class="summary-row summary-total">
+                    <span>Total:</span>
+                    <span id="cart-total">$5.00</span>
+                </div>
+                <button class="btn btn-block mt-1" id="checkout-btn">Proceed to Checkout</button>
+            </div>
+        </section>
+
+        <!-- Checkout Section -->
+        <section id="checkout" class="section">
+            <h1 class="page-title">Checkout</h1>
+            <div class="form-container">
+                <form id="checkout-form">
+                    <div class="form-group">
+                        <label for="shipping-name">Full Name</label>
+                        <input type="text" id="shipping-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shipping-address">Address</label>
+                        <input type="text" id="shipping-address" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shipping-city">City</label>
+                        <input type="text" id="shipping-city" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="shipping-zip">ZIP Code</label>
+                        <input type="text" id="shipping-zip" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="payment-method">Payment Method</label>
+                        <select id="payment-method" class="form-control" required>
+                            <option value="credit">Credit Card</option>
+                            <option value="debit">Debit Card</option>
+                            <option value="paypal">PayPal</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-block">Place Order</button>
+                </form>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="login" class="section">
+            <h1 class="page-title text-center">Login to Your Account</h1>
+            <div class="form-container">
+                <div id="login-message"></div>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label for="login-email">Email</label>
+                        <input type="email" id="login-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="login-password">Password</label>
+                        <input type="password" id="login-password" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-block">Login</button>
+                </form>
+                <p class="text-center mt-1">Don't have an account? <a href="#" class="nav-link" data-section="register">Register here</a></p>
+            </div>
+        </section>
+
+        <!-- Register Section -->
+        <section id="register" class="section">
+            <h1 class="page-title text-center">Create an Account</h1>
+            <div class="form-container">
+                <div id="register-message"></div>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label for="register-name">Full Name</label>
+                        <input type="text" id="register-name" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-email">Email</label>
+                        <input type="email" id="register-email" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-password">Password</label>
+                        <input type="password" id="register-password" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="register-confirm">Confirm Password</label>
+                        <input type="password" id="register-confirm" class="form-control" required>
+                    </div>
+                    <button type="submit" class="btn btn-block">Register</button>
+                </form>
+                <p class="text-center mt-1">Already have an account? <a href="#" class="nav-link" data-section="login">Login here</a></p>
+            </div>
+        </section>
+
+        <!-- Order Confirmation Section -->
+        <section id="order-confirmation" class="section">
+            <h1 class="page-title text-center">Order Confirmation</h1>
+            <div class="form-container text-center">
+                <h2>Thank you for your order!</h2>
+                <p>Your order has been placed successfully.</p>
+                <p>Order ID: <span id="order-id"></span></p>
+                <p>Total Amount: $<span id="order-total"></span></p>
+                <p>We'll send you a confirmation email shortly.</p>
+                <button class="btn mt-1" id="continue-shopping">Continue Shopping</button>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>&copy; 2023 ShopEasy. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        // API BASE URL - Connect to your backend
+        const API_BASE = 'http://localhost:5000/api';
+
+        // Application state
+        let currentUser = null;
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let products = [];
+        let authToken = localStorage.getItem('authToken');
+
+        // DOM Elements
+        const sections = document.querySelectorAll('.section');
+        const navLinks = document.querySelectorAll('.nav-link');
+        const cartIcon = document.getElementById('cart-icon');
+        const cartCount = document.querySelector('.cart-count');
+        const cartItemsContainer = document.getElementById('cart-items');
+        const cartSubtotal = document.getElementById('cart-subtotal');
+        const cartShipping = document.getElementById('cart-shipping');
+        const cartTotal = document.getElementById('cart-total');
+        const checkoutBtn = document.getElementById('checkout-btn');
+        const checkoutForm = document.getElementById('checkout-form');
+        const loginForm = document.getElementById('login-form');
+        const registerForm = document.getElementById('register-form');
+        const continueShoppingBtn = document.getElementById('continue-shopping');
+        const authLinks = document.getElementById('auth-links');
+        const loginMessage = document.getElementById('login-message');
+        const registerMessage = document.getElementById('register-message');
+        const productsGrid = document.getElementById('products-grid');
+        const homeProducts = document.getElementById('home-products');
+        const orderIdElement = document.getElementById('order-id');
+        const orderTotalElement = document.getElementById('order-total');
+
+        // API Helper Functions
+        async function apiRequest(url, options = {}) {
+            try {
+                const response = await fetch(`${API_BASE}${url}`, {
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': authToken ? `Bearer ${authToken}` : '',
+                        ...options.headers
+                    },
+                    ...options
+                });
+                
+                // Handle non-JSON responses
+                const contentType = response.headers.get('content-type');
+                if (!contentType || !contentType.includes('application/json')) {
+                    const text = await response.text();
+                    throw new Error(`Server returned non-JSON response: ${text}`);
+                }
+                
+                const data = await response.json();
+                
+                if (!response.ok) {
+                    throw new Error(data.error || `Request failed with status ${response.status}`);
+                }
+                
+                return data;
+            } catch (error) {
+                console.error('API Request failed:', error);
+                throw error;
+            }
+        }
+
+        // Initialize the application
+        async function init() {
+            await loadProductsFromAPI();
+            updateCartUI();
+            setupEventListeners();
+            
+            // Check if user is logged in
+            if (authToken) {
+                try {
+                    const savedUser = localStorage.getItem('currentUser');
+                    if (savedUser) {
+                        currentUser = JSON.parse(savedUser);
+                        updateAuthUI();
+                    }
+                } catch (error) {
+                    console.error('Error restoring session:', error);
+                    logout();
+                }
+            }
+        }
+
+        // Load products from backend API
+        async function loadProductsFromAPI() {
+            try {
+                const response = await apiRequest('/products');
+                // MongoDB returns _id instead of id, so we need to map it
+                products = response.map(product => ({
+                    id: product._id,
+                    name: product.name,
+                    price: product.price,
+                    image: product.image,
+                    description: product.description,
+                    category: product.category
+                }));
+                loadProducts();
+            } catch (error) {
+                console.error('Error loading products:', error);
+                showError('Failed to load products. Using demo data.');
+                // Fallback to sample products
+                products = [
+                    {
+                        id: "1",
+                        name: "Wireless Bluetooth Headphones",
+                        price: 79.99,
+                        image: "/images/wireless-bluetooth.jpeg",
+                        description: "High-quality wireless headphones with noise cancellation.",
+                        category: "Electronics"
+                    },
+                    {
+                        id: "2",
+                        name: "Smartphone",
+                        price: 599.99,
+                        image: "/images/smartphone.jpeg",
+                        description: "Latest smartphone with advanced features and camera.",
+                        category: "Electronics"
+                    },
+                    {
+                        id: "3",
+                        name: "Laptop Backpack",
+                        price: 49.99,
+                        image: "/images/laptop-backpack.jpeg",
+                        description: "Durable backpack with laptop compartment and water resistance.",
+                        category: "Accessories"
+                    },
+                    {
+                        id: "4",
+                        name: "Fitness Tracker",
+                        price: 129.99,
+                        image: "/images/fitness-tracker.jpeg",
+                        description: "Track your steps, heart rate, and sleep patterns.",
+                        category: "Electronics"
+                    },
+                    {
+                        id: "5",
+                        name: "Coffee Maker",
+                        price: 89.99,
+                        image: "images/coffee-maker.jpeg",
+                        description: "Programmable coffee maker with thermal carafe.",
+                        category: "Home"
+                    },
+                    {
+                        id: "6",
+                        name: "Desk Lamp",
+                        price: 34.99,
+                        image: "/images/lamp.jpeg",
+                        description: "LED desk lamp with adjustable brightness.",
+                        category: "Home"
+                    }
+                ];
+                loadProducts();
+            }
+        }
+
+        // Set up event listeners
+        function setupEventListeners() {
+            // Navigation
+            navLinks.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const sectionId = link.getAttribute('data-section');
+                    showSection(sectionId);
+                });
+            });
+
+            // Cart icon
+            cartIcon.addEventListener('click', () => {
+                showSection('cart');
+            });
+
+            // Checkout button
+            checkoutBtn.addEventListener('click', () => {
+                if (cart.length === 0) {
+                    alert('Your cart is empty!');
+                    return;
+                }
+                
+                if (!currentUser) {
+                    alert('Please login to proceed with checkout.');
+                    showSection('login');
+                    return;
+                }
+                
+                showSection('checkout');
+            });
+
+            // Checkout form
+            checkoutForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                processOrder();
+            });
+
+            // Login form
+            loginForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                loginUser();
+            });
+
+            // Register form
+            registerForm.addEventListener('submit', (e) => {
+                e.preventDefault();
+                registerUser();
+            });
+
+            // Continue shopping button
+            continueShoppingBtn.addEventListener('click', () => {
+                showSection('products');
+            });
+        }
+
+        // Show a specific section and hide others
+        function showSection(sectionId) {
+            sections.forEach(section => {
+                section.classList.remove('active');
+            });
+            
+            document.getElementById(sectionId).classList.add('active');
+            
+            // Clear messages
+            loginMessage.innerHTML = '';
+            registerMessage.innerHTML = '';
+            
+            // Special handling for certain sections
+            if (sectionId === 'products' || sectionId === 'home') {
+                loadProducts();
+            } else if (sectionId === 'cart') {
+                renderCart();
+            }
+        }
+
+        // Load and display products
+        function loadProducts() {
+            const grids = [productsGrid, homeProducts];
+            
+            grids.forEach(grid => {
+                if (!grid) return;
+                
+                grid.innerHTML = '';
+                
+                if (products.length === 0) {
+                    grid.innerHTML = '<div class="text-center"><div class="spinner"></div><p>Loading products...</p></div>';
+                    return;
+                }
+                
+                products.forEach(product => {
+                    const productCard = document.createElement('div');
+                    productCard.className = 'product-card';
+                    productCard.innerHTML = `
+                       <img src="http://localhost:5000${product.image}" alt="${product.name}" class="product-image">
+
+                        <div class="product-info">
+                            <h3 class="product-title">${product.name}</h3>
+                            <p class="product-price">$${product.price.toFixed(2)}</p>
+                            <button class="btn btn-block" onclick="viewProductDetails('${product.id}')">View Details</button>
+                            <button class="btn btn-block btn-success mt-1" onclick="addToCart('${product.id}')">Add to Cart</button>
+                        </div>
+                    `;
+                    grid.appendChild(productCard);
+                });
+            });
+        }
+
+        // View product details
+        function viewProductDetails(productId) {
+            const product = products.find(p => p.id === productId);
+            
+            if (product) {
+                const productDetailsContent = document.getElementById('product-details-content');
+                productDetailsContent.innerHTML = `
+                    <div class="product-details">
+                        <div style="display: flex; flex-wrap: wrap; gap: 2rem;">
+                            <div style="flex: 1; min-width: 300px;">
+                                <img src="http://localhost:5000${product.image}" alt="${product.name}" style="width: 100%; border-radius: 5px;">
+                            </div>
+                            <div style="flex: 1; min-width: 300px;">
+                                <h2>${product.name}</h2>
+                                <p class="product-price" style="font-size: 1.5rem;">$${product.price.toFixed(2)}</p>
+                                <p>${product.description}</p>
+                                <p><strong>Category:</strong> ${product.category}</p>
+                                <div class="mt-2">
+                                    <button class="btn" onclick="addToCart('${product.id}')">Add to Cart</button>
+                                    <button class="btn" onclick="showSection('products')">Back to Products</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                showSection('product-details');
+            }
+        }
+
+        // Add product to cart
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            
+            if (product) {
+                const existingItem = cart.find(item => item.id === productId);
+                
+                if (existingItem) {
+                    existingItem.quantity += 1;
+                } else {
+                    cart.push({
+                        id: product.id,
+                        name: product.name,
+                        price: product.price,
+                        image: product.image,
+                        quantity: 1
+                    });
+                }
+                
+                updateCartUI();
+                alert(`${product.name} added to cart!`);
+            }
+        }
+
+        // Update cart UI (icon count)
+        function updateCartUI() {
+            const totalItems = cart.reduce((total, item) => total + item.quantity, 0);
+            cartCount.textContent = totalItems;
+            
+            // Save cart to localStorage
+            localStorage.setItem('cart', JSON.stringify(cart));
+        }
+
+        // Render cart items
+        function renderCart() {
+            cartItemsContainer.innerHTML = '';
+            
+            if (cart.length === 0) {
+                cartItemsContainer.innerHTML = '<p class="text-center">Your cart is empty.</p>';
+                return;
+            }
+            
+            cart.forEach(item => {
+                const cartItem = document.createElement('div');
+                cartItem.className = 'cart-item';
+                cartItem.innerHTML = `
+                    <img src="${item.image}" alt="${item.name}" class="cart-item-image">
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-title">${item.name}</h3>
+                        <p class="cart-item-price">$${item.price.toFixed(2)}</p>
+                        <div class="cart-item-quantity">
+                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', -1)">-</button>
+                            <input type="number" class="quantity-input" value="${item.quantity}" min="1" onchange="updateQuantity('${item.id}', 0, this.value)">
+                            <button class="quantity-btn" onclick="updateQuantity('${item.id}', 1)">+</button>
+                            <button class="btn" style="margin-left: auto;" onclick="removeFromCart('${item.id}')">Remove</button>
+                        </div>
+                    </div>
+                `;
+                cartItemsContainer.appendChild(cartItem);
+            });
+            
+            updateCartSummary();
+        }
+
+        // Update item quantity in cart
+        function updateQuantity(productId, change, newValue) {
+            const item = cart.find(item => item.id === productId);
+            
+            if (item) {
+                if (newValue !== undefined) {
+                    item.quantity = parseInt(newValue) || 1;
+                } else {
+                    item.quantity += change;
+                }
+                
+                if (item.quantity < 1) {
+                    removeFromCart(productId);
+                    return;
+                }
+                
+                updateCartUI();
+                renderCart();
+            }
+        }
+
+        // Remove item from cart
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCartUI();
+            renderCart();
+        }
+
+        // Update cart summary (subtotal, shipping, total)
+        function updateCartSummary() {
+            const subtotal = cart.reduce((total, item) => total + (item.price * item.quantity), 0);
+            const shipping = subtotal > 0 ? 5.00 : 0;
+            const total = subtotal + shipping;
+            
+            cartSubtotal.textContent = `$${subtotal.toFixed(2)}`;
+            cartShipping.textContent = `$${shipping.toFixed(2)}`;
+            cartTotal.textContent = `$${total.toFixed(2)}`;
+        }
+
+        // Process order - UPDATED TO USE orders-simple ENDPOINT
+        async function processOrder() {
+            if (!currentUser) {
+                alert('Please login to place an order.');
+                showSection('login');
+                return;
+            }
+            
+            if (cart.length === 0) {
+                alert('Your cart is empty!');
+                return;
+            }
+            
+            try {
+                const shippingAddress = {
+                    name: document.getElementById('shipping-name').value,
+                    address: document.getElementById('shipping-address').value,
+                    city: document.getElementById('shipping-city').value,
+                    zip: document.getElementById('shipping-zip').value
+                };
+                
+                const paymentMethod = document.getElementById('payment-method').value;
+                
+                const orderData = {
+                    items: cart,
+                    shippingAddress: shippingAddress,
+                    paymentMethod: paymentMethod
+                };
+                
+                // Use the simple order endpoint that handles ID conversion properly
+                const order = await apiRequest('/orders-simple', {
+                    method: 'POST',
+                    body: JSON.stringify(orderData)
+                });
+                
+                // Clear cart
+                cart = [];
+                updateCartUI();
+                localStorage.removeItem('cart');
+                
+                // Show confirmation with order details
+                orderIdElement.textContent = order.id || order._id || 'N/A';
+                orderTotalElement.textContent = order.total ? order.total.toFixed(2) : '0.00';
+                showSection('order-confirmation');
+                
+            } catch (error) {
+                console.error('Order error details:', error);
+                alert('Failed to place order: ' + error.message);
+            }
+        }
+
+        // Login user
+        async function loginUser() {
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+            
+            if (!email || !password) {
+                showMessage(loginMessage, 'Please enter both email and password.', 'error');
+                return;
+            }
+            
+            try {
+                const data = await apiRequest('/login', {
+                    method: 'POST',
+                    body: JSON.stringify({ email, password })
+                });
+                
+                // Save user data and token
+                currentUser = data.user;
+                authToken = data.token;
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                localStorage.setItem('authToken', authToken);
+                
+                updateAuthUI();
+                showSection('products');
+                showMessage(loginMessage, 'Login successful!', 'success');
+                
+            } catch (error) {
+                showMessage(loginMessage, 'Login failed: ' + error.message, 'error');
+            }
+        }
+
+        // Register user
+        async function registerUser() {
+            const name = document.getElementById('register-name').value;
+            const email = document.getElementById('register-email').value;
+            const password = document.getElementById('register-password').value;
+            const confirm = document.getElementById('register-confirm').value;
+            
+            if (!name || !email || !password || !confirm) {
+                showMessage(registerMessage, 'Please fill in all fields.', 'error');
+                return;
+            }
+            
+            if (password !== confirm) {
+                showMessage(registerMessage, 'Passwords do not match.', 'error');
+                return;
+            }
+            
+            try {
+                const data = await apiRequest('/register', {
+                    method: 'POST',
+                    body: JSON.stringify({ name, email, password })
+                });
+                
+                // Save user data and token
+                currentUser = data.user;
+                authToken = data.token;
+                
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                localStorage.setItem('authToken', authToken);
+                
+                updateAuthUI();
+                showSection('products');
+                showMessage(registerMessage, 'Registration successful! You are now logged in.', 'success');
+                
+            } catch (error) {
+                showMessage(registerMessage, 'Registration failed: ' + error.message, 'error');
+            }
+        }
+
+        // Update authentication UI
+        function updateAuthUI() {
+            if (currentUser) {
+                authLinks.innerHTML = `
+                    <span>Welcome, ${currentUser.name}</span> | 
+                    <a href="#" onclick="logout()">Logout</a>
+                `;
+            } else {
+                authLinks.innerHTML = `
+                    <a href="#" class="nav-link" data-section="login">Login</a> / 
+                    <a href="#" class="nav-link" data-section="register">Register</a>
+                `;
+            }
+        }
+
+        // Logout user
+        function logout() {
+            currentUser = null;
+            authToken = null;
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('authToken');
+            updateAuthUI();
+            showSection('home');
+        }
+
+        // Helper functions
+        function showMessage(container, message, type) {
+            container.innerHTML = `<div class="${type === 'error' ? 'error-message' : 'success-message'}">${message}</div>`;
+        }
+
+        function showError(message) {
+            console.error(message);
+        }
+
+        // Initialize the app when the DOM is loaded
+        document.addEventListener('DOMContentLoaded', init);
+
+        // Make functions available globally for onclick handlers
+        window.viewProductDetails = viewProductDetails;
+        window.addToCart = addToCart;
+        window.updateQuantity = updateQuantity;
+        window.removeFromCart = removeFromCart;
+        window.showSection = showSection;
+        window.logout = logout;
+    </script>
+</body>
+</html>
